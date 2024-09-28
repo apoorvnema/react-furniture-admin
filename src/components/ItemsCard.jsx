@@ -13,16 +13,11 @@ const ItemsCard = ({ pathname }) => {
     const [showUpdateModal, setShowUpdateModal] = useState(false);
     const [items, setItems] = useState([]);
     const [currentItem, setCurrentItem] = useState(null);
+    const [loading, setLoading] = useState(false);
     const actions = [
         { label: 'Update Product', onClick: (id) => handleUpdateItem(id) },
         { label: 'Delete Product', onClick: (id) => handleDeleteItem(id) },
     ];
-    const [loading, setLoading] = useState(false);
-    const [alert, setAlert] = useState({
-        message: 'Something went wrong!',
-        type: 'error',
-        visible: false
-    });
 
     useEffect(() => {
         fetchItems();

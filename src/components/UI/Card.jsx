@@ -35,7 +35,7 @@ const CustomCard = ({ title, description, imageUrl, actions, quantity, category,
 
             {actions && (
                 <CardActions sx={{ justifyContent: 'space-between', display: 'flex' }}>
-                    {actions.map((action, index) => (
+                    {actions?.map((action, index) => (
                         <Button key={index} size="small" onClick={()=>{action.onClick(id)}}>
                             {action.label}
                         </Button>
