@@ -18,6 +18,18 @@ class ApiManager {
         const query = ApiEndpoints.deleteProduct(id);
         return ApiMethods.deleteMethod(query);
     }
+    static updateProduct = (id, body) => {
+        const query = ApiEndpoints.updateProduct(id);
+        return ApiMethods.putMethod(query, body);
+    }
+    static getOrders = () => {
+        const query = ApiEndpoints.getOrders();
+        return ApiMethods.getMethod(query);
+    }
+    static updateOrderStatus = (id, body) => {
+        const query = ApiEndpoints.updateOrderStatus(id);
+        return ApiMethods.putMethod(query, body);
+    }
 }
 
 export default ApiManager;

@@ -7,12 +7,12 @@ const categories = [
   { value: 'sliding wardrobes', label: 'Sliding Wardrobes' },
 ];
 
-const ProductForm = ({ onSubmit, mode }) => {
-  const [productName, setProductName] = useState('');
-  const [category, setCategory] = useState(categories[0].value);
-  const [quantity, setQuantity] = useState(1);
-  const [description, setDescription] = useState('');
-  const [productURL, setProductURL] = useState('');
+const ProductForm = ({ onSubmit, mode, initialValues }) => {
+  const [productName, setProductName] = useState(initialValues?.name ? initialValues?.name : '');
+  const [category, setCategory] = useState(initialValues?.category ? initialValues?.category : categories[0].value);
+  const [quantity, setQuantity] = useState(initialValues?.quantity ? initialValues?.quantity : 1);
+  const [description, setDescription] = useState(initialValues?.description ? initialValues?.description : '');
+  const [productURL, setProductURL] = useState(initialValues?.imageUrl ? initialValues?.imageUrl : '');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,16 +22,9 @@ const ProductForm = ({ onSubmit, mode }) => {
       quantity: parseInt(quantity),
       description,
       imageUrl: productURL,
+      id: initialValues?.id ? initialValues?.id : null,
     };
     onSubmit(product);
-    resetForm();
-  };
-
-  const resetForm = () => {
-    setProductName('');
-    setCategory(categories[0].value);
-    setQuantity(0);
-    setDescription('');
   };
 
   const handleQuantityChange = (e) => {

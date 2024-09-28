@@ -1,5 +1,5 @@
-import { Fab, Typography, useMediaQuery } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import { Fab, Typography, useMediaQuery } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import TransitionsModal from './UI/Modal';
 import ProductForm from './UI/Form/ProductForm';
@@ -10,9 +10,11 @@ import Loader from './UI/Loader';
 const ItemsCard = ({ pathname }) => {
     const isSmallScreen = useMediaQuery('(max-width:600px)');
     const [showModal, setShowModal] = useState(false);
+    const [showUpdateModal, setShowUpdateModal] = useState(false);
     const [items, setItems] = useState([]);
+    const [currentItem, setCurrentItem] = useState(null);
     const actions = [
-        { label: 'Update Product', onClick: () => console.log('Add to Cart clicked') },
+        { label: 'Update Product', onClick: (id) => handleUpdateItem(id) },
         { label: 'Delete Product', onClick: (id) => handleDeleteItem(id) },
     ];
     const [loading, setLoading] = useState(false);
@@ -26,14 +28,30 @@ const ItemsCard = ({ pathname }) => {
         fetchItems();
     }, []);
 
+    const handleUpdateProduct = async (product) => {
+        try {
+            const body = {
+                category: product?.category,
+                description: product?.description,
+                imageUrl: product?.imageUrl,
+                name: product?.name,
+                quantity: product?.quantity
+            }
+            const response = await ApiManager.updateProduct(product?.id, body);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            handleCloseUpdateModal();
+            fetchItems();
+        }
+    };
+
     async function handleDeleteItem(id) {
         try {
             const response = await ApiManager.deleteProduct(id);
-        }
-        catch (error) {
+        } catch (error) {
             console.log(error);
-        }
-        finally {
+        } finally {
             fetchItems();
         }
     }
@@ -46,13 +64,13 @@ const ItemsCard = ({ pathname }) => {
             setItems(productsArray);
         } catch (error) {
             console.log(error);
-        }
-        finally {
+        } finally {
             setLoading(false);
         }
     };
 
     const handleAddItem = () => {
+        setCurrentItem(null);
         setShowModal(true);
     };
 
@@ -60,14 +78,30 @@ const ItemsCard = ({ pathname }) => {
         setShowModal(false);
     };
 
+    const handleUpdateItem = (id) => {
+        const itemToUpdate = items.find(([itemId]) => itemId === id)[1];
+        setCurrentItem({ id, ...itemToUpdate });
+        setShowUpdateModal(true);
+    };
+
+    const handleCloseUpdateModal = () => {
+        setShowUpdateModal(false);
+        setCurrentItem(null);
+    };
+
     const handleAddProduct = async (product) => {
         try {
-            const response = await ApiManager.addProduct(product);
-        }
-        catch (error) {
+            const body = {
+                category: product?.category,
+                description: product?.description,
+                imageUrl: product?.imageUrl,
+                name: product?.name,
+                quantity: product?.quantity
+            }
+            const response = await ApiManager.addProduct(body);
+        } catch (error) {
             console.log(error);
-        }
-        finally {
+        } finally {
             handleCloseModal();
             fetchItems();
         }
@@ -91,7 +125,7 @@ const ItemsCard = ({ pathname }) => {
                         maxWidth: '300px',
                         marginBottom: '1.5rem'
                     }}>
-                        <CustomCard 
+                        <CustomCard
                             title={item.name}
                             description={item.description}
                             imageUrl={item.imageUrl}
@@ -117,8 +151,11 @@ const ItemsCard = ({ pathname }) => {
             <TransitionsModal show={showModal} onClose={handleCloseModal} title={"Add Item"}>
                 <ProductForm mode={"Add"} onSubmit={handleAddProduct} />
             </TransitionsModal>
+            <TransitionsModal show={showUpdateModal} onClose={handleCloseUpdateModal} title={"Update Item"}>
+                <ProductForm mode={"Update"} onSubmit={handleUpdateProduct} initialValues={currentItem} />
+            </TransitionsModal>
         </>
-    )
-}
+    );
+};
 
-export default ItemsCard
+export default ItemsCard;
