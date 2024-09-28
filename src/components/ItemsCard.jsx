@@ -13,7 +13,7 @@ const ItemsCard = ({ pathname }) => {
     const [items, setItems] = useState([]);
     const actions = [
         { label: 'Update Product', onClick: () => console.log('Add to Cart clicked') },
-        { label: 'Delete Product', onClick: () => console.log('Details clicked') },
+        { label: 'Delete Product', onClick: (id) => handleDeleteItem(id) },
     ];
     const [loading, setLoading] = useState(false);
     const [alert, setAlert] = useState({
@@ -25,6 +25,18 @@ const ItemsCard = ({ pathname }) => {
     useEffect(() => {
         fetchItems();
     }, []);
+
+    async function handleDeleteItem(id) {
+        try {
+            const response = await ApiManager.deleteProduct(id);
+        }
+        catch (error) {
+            console.log(error);
+        }
+        finally {
+            fetchItems();
+        }
+    }
 
     const fetchItems = async () => {
         try {
@@ -86,6 +98,7 @@ const ItemsCard = ({ pathname }) => {
                             actions={actions}
                             quantity={item.quantity}
                             category={item.category}
+                            id={id}
                         />
                     </div>
                 ))}

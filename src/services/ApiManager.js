@@ -14,6 +14,10 @@ class ApiManager {
         const query = ApiEndpoints.getProducts();
         return ApiMethods.getMethod(query);
     }
+    static deleteProduct = (id) => {
+        const query = ApiEndpoints.deleteProduct(id);
+        return ApiMethods.deleteMethod(query);
+    }
 }
 
 export default ApiManager;

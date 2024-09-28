@@ -7,6 +7,7 @@ const ApiEndpoints = {
     login: ()=>(`${authUrl}/accounts:signInWithPassword?key=${apiKey}`),
     addProduct: ()=>(`${dbUrl}/products.json`),
     getProducts: ()=>(`${dbUrl}/products.json`),
+    deleteProduct: (id)=>(`${dbUrl}/products/${id}.json`)
 }
 
 export default ApiEndpoints;
