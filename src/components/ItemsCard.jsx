@@ -30,7 +30,8 @@ const ItemsCard = ({ pathname }) => {
                 description: product?.description,
                 imageUrl: product?.imageUrl,
                 name: product?.name,
-                quantity: product?.quantity
+                quantity: product?.quantity,
+                price: product?.price
             }
             const response = await ApiManager.updateProduct(product?.id, body);
         } catch (error) {
@@ -91,7 +92,8 @@ const ItemsCard = ({ pathname }) => {
                 description: product?.description,
                 imageUrl: product?.imageUrl,
                 name: product?.name,
-                quantity: product?.quantity
+                quantity: product?.quantity,
+                price: product?.price
             }
             const response = await ApiManager.addProduct(body);
         } catch (error) {
@@ -127,6 +129,7 @@ const ItemsCard = ({ pathname }) => {
                             actions={actions}
                             quantity={item.quantity}
                             category={item.category}
+                            price={item.price}
                             id={id}
                         />
                     </div>

@@ -11,6 +11,7 @@ const ProductForm = ({ onSubmit, mode, initialValues }) => {
   const [productName, setProductName] = useState(initialValues?.name ? initialValues?.name : '');
   const [category, setCategory] = useState(initialValues?.category ? initialValues?.category : categories[0].value);
   const [quantity, setQuantity] = useState(initialValues?.quantity ? initialValues?.quantity : 1);
+  const [price, setPrice] = useState(initialValues?.price ? initialValues?.price : 1);
   const [description, setDescription] = useState(initialValues?.description ? initialValues?.description : '');
   const [productURL, setProductURL] = useState(initialValues?.imageUrl ? initialValues?.imageUrl : '');
 
@@ -20,7 +21,8 @@ const ProductForm = ({ onSubmit, mode, initialValues }) => {
       name: productName,
       category,
       quantity: parseInt(quantity),
-      description,
+      price: parseFloat(price),
+      description: description.trim(),
       imageUrl: productURL,
       id: initialValues?.id ? initialValues?.id : null,
     };
@@ -30,6 +32,11 @@ const ProductForm = ({ onSubmit, mode, initialValues }) => {
   const handleQuantityChange = (e) => {
     const value = Math.max(0, parseInt(e.target.value));
     setQuantity(value);
+  };
+
+  const handlePriceChange = (e) => {
+    const value = Math.max(0, parseFloat(e.target.value));
+    setPrice(value);
   };
 
   return (
@@ -64,6 +71,14 @@ const ProductForm = ({ onSubmit, mode, initialValues }) => {
         type="number"
         value={quantity}
         onChange={handleQuantityChange}
+        required
+        slotProps={{ htmlInput: { min: 0 } }}
+      />
+      <TextField
+        label="Price"
+        type="number"
+        value={price}
+        onChange={handlePriceChange}
         required
         slotProps={{ htmlInput: { min: 0 } }}
       />
