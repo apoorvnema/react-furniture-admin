@@ -5,7 +5,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
-import appProviderTheme from '../assets/appprovidertheme';
+import appProviderTheme from '../assets/appProviderTheme';
 import { createTheme } from '@mui/material/styles';
 import OrdersCard from '../components/OrdersCard';
 import ItemsCard from '../components/ItemsCard';
