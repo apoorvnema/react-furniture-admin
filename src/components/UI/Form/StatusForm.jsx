@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { TextField, Button, Box, MenuItem } from '@mui/material';
 
 const statuses = [
+  { value: 'Ordered', label: 'Ordered' },
   { value: 'Shipped', label: 'Shipped' },
   { value: 'Delivered', label: 'Delivered' },
   { value: 'Canceled', label: 'Canceled' },

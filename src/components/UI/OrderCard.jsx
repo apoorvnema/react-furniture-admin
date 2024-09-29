@@ -24,7 +24,7 @@ const OrderCard = ({ orderId, userName, email, address, orderDate, orderStatus, 
                     {items?.map((item, index) => (
                         <Box key={index} sx={{ display: 'flex', justifyContent: 'space-between' }}>
                             <Typography variant="body2" color="text.secondary">
-                                {item.productName} (Qty: {item.quantity}) - ${item.price}
+                                {item.productName || item.name} (Qty: {item.quantity}) - ${item.price}
                             </Typography>
                         </Box>
                     ))}
